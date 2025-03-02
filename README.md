@@ -1,3 +1,3 @@
 # Todo-finite
 
-Experiment in Todo list.
+Tiny To-do list experiment.
