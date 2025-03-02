@@ -54,60 +54,27 @@
 
     const characterLimit = 70;
     const columnCount = 14;
-    const rowCount = characterLimit / columnCount;
     
     inputArea.cols = columnCount;
-    inputArea.rows = rowCount;
     inputArea.maxLength = characterLimit;
 
     var full = false;
     var currentText = "";
 
-    updateCharCounter();
+    update();
 
     inputArea.oninput = function() {
-      
+      update();
+    }
 
-      full = getTrueCharCount(inputArea.value) >= characterLimit + 1;
-
-      if (!full) {
-        currentText = inputArea.value.substring(0, characterLimit);
-      } else {
-        console.log("full")
-      }
-      
-
-      //console.log(getTrueCharCount(currentText));
-      console.log(currentText.split(""))
-      inputArea.value = currentText;
-
+    function update() {
+      inputArea.style.height = "auto";
+      inputArea.style.height = inputArea.scrollHeight + "px";
       updateCharCounter();
     }
     
-    // Line breaks should count as the remaining number of characters in that row 
-    function getTrueCharCount(inString) {
-      if (inString === "") {
-        return 0;
-      }
-      
-      var count = 0;
-      var curLineCount = 0;
-      inString.split("").forEach((char) => {
-        
-        if (char === "\n") {
-          count += columnCount - (curLineCount % columnCount);
-          curLineCount = 0;
-        } else {
-          count += 1;
-          curLineCount += 1;
-        }
-
-      });
-
-      return count;
-    }
     function updateCharCounter() {
-      charCounter.innerHTML = `${getTrueCharCount(currentText)}/${characterLimit}`;
+      charCounter.innerHTML = `${inputArea.value.length}/${characterLimit}`;
     }
 
 
