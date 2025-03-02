@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<head>
+  <title>todo finite</title>
+
+  <style>
+    body {
+      font-family: monospace;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #global-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin: 0px auto;
+      align-content: center;
+    }
+
+    #textarea-container {
+      margin: 0px auto;
+    }
+
+    #input-textarea {
+      overflow: hidden;
+      resize: none;
+      text-wrap:unrestricted;
+      word-break: break-all;
+      font-size: 4em;
+    }
+
+    #char-counter {
+      text-align: right;
+    }
+  </style>
+</head>
+
+<body>
+ <div id="global-container">
+    <h1>TODO Finite</h1>
+    <div id ="textarea-container">
+      <textarea id="input-textarea" rows="8" cols="8" ></textarea>
+      <h3 id="char-counter">0/69</h3>
+    </div>
+  </div>
+
+
+  <script>
+    const inputArea = document.getElementById("input-textarea");
+    const charCounter = document.getElementById("char-counter");
+
+    const characterLimit = 70;
+    const columnCount = 14;
+    const rowCount = characterLimit / columnCount;
+    
+    inputArea.cols = columnCount;
+    inputArea.rows = rowCount;
+    inputArea.maxLength = characterLimit;
+
+    var full = false;
+    var currentText = "";
+
+    updateCharCounter();
+
+    inputArea.oninput = function() {
+      
+
+      full = getTrueCharCount(inputArea.value) >= characterLimit + 1;
+
+      if (!full) {
+        currentText = inputArea.value.substring(0, characterLimit);
+      } else {
+        console.log("full")
+      }
+      
+
+      //console.log(getTrueCharCount(currentText));
+      console.log(currentText.split(""))
+      inputArea.value = currentText;
+
+      updateCharCounter();
+    }
+    
+    // Line breaks should count as the remaining number of characters in that row 
+    function getTrueCharCount(inString) {
+      if (inString === "") {
+        return 0;
+      }
+      
+      var count = 0;
+      var curLineCount = 0;
+      inString.split("").forEach((char) => {
+        
+        if (char === "\n") {
+          count += columnCount - (curLineCount % columnCount);
+          curLineCount = 0;
+        } else {
+          count += 1;
+          curLineCount += 1;
+        }
+
+      });
+
+      return count;
+    }
+    function updateCharCounter() {
+      charCounter.innerHTML = `${getTrueCharCount(currentText)}/${characterLimit}`;
+    }
+
+
+  </script>
+</body>
