@@ -35,15 +35,23 @@
     #char-counter {
       text-align: right;
     }
+    .noselect {
+      -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+      -khtml-user-select: none; /* Konqueror HTML */
+      -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+      user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+    }
   </style>
 </head>
 
 <body>
  <div id="global-container">
-    <h1>TODO Finite</h1>
-    <div id ="textarea-container">
+    <h1 class="noselect">TODO Finite</h1>
+    <div id="textarea-container" >
       <textarea id="input-textarea" rows="8" cols="8" placeholder="list tasks..." ></textarea>
-      <h3 id="char-counter">0/69</h3>
+      <h3 id="char-counter" class="noselect">0/69</h3>
     </div>
   </div>
 
